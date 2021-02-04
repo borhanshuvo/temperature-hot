@@ -42,7 +42,7 @@
         }
 
         function weatherLocation(city, country) {
-            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},${country} &appid=d4e923379b0de950134fe833aec61b34`)
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},${country} &appid=e1e8dd81793866f6657f307225734b24`)
                 .then(response => response.json())
                 .then(data => {
                     const cityName = data.name;
