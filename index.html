@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Temperature Hot</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input id="city-input" type="text" class="form-control" placeholder="Enter Location for Weather...">
+                <div class="input-group-append">
+                    <button onclick="search()" type="button" class="btn btn-danger">Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="weather-status text-white text-center">
+            <img id="icon" src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
+            <h1><span id="city"> </span>,<span id="country"> </span></h1>
+            <h3><span id="temp"> </span>&deg;C</h3>
+            <h1 class="lead" id="weather"> </h1>
+        </div>
+    </div>
+    <script>
+        function search() {
+            const cityInput = document.getElementById('city-input').value;
+            weatherLocation(cityInput);
+        }
+
+        function weatherLocation(city, country) {
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},${country} &appid=d4e923379b0de950134fe833aec61b34`)
+                .then(response => response.json())
+                .then(data => {
+                    const cityName = data.name;
+                    document.getElementById('city').innerText = cityName;
+                    const temp = Math.round((data.main.temp) - 273.15);
+                    document.getElementById('temp').innerText = temp;
+                    const country = data.sys.country;
+                    document.getElementById('country').innerText = country;
+                    const weather = data.weather[0]
+                    document.getElementById('weather').innerText = weather.main;
+                    const icon = weather.icon;
+                    document.getElementById('icon').setAttribute('src', 'https://openweathermap.org/img/wn/' + icon + '.png');
+                    document.getElementById('city-input').value = "";
+                });
+        }
+
+        weatherLocation('Chandpur', 'BD');
+    </script>
+</body>
+
+</html>
